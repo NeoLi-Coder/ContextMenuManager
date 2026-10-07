@@ -13,7 +13,7 @@ namespace ContextMenuManager.Controls
         public static readonly string WinXPath = Environment.ExpandEnvironmentVariables(@"%LocalAppData%\Microsoft\Windows\WinX");
         public static readonly string BackupWinXPath = Environment.ExpandEnvironmentVariables(@"%LocalAppData%\Microsoft\Windows\-WinX");
         public static readonly string DefaultWinXPath = Environment.ExpandEnvironmentVariables(@"%SystemDrive%\Users\Default\AppData\Local\Microsoft\Windows\WinX");
-        public static readonly string WinXDefaultPath = Environment.ExpandEnvironmentVariables(@"%LocalAppData%\Microsoft\Windows\WinXDefault");
+        public static string WinXDefaultPath => $@"{AppConfig.MenuBackupDir}\WinXDefault";
 
         public void LoadItems()
         {

@@ -52,23 +52,33 @@
     <Page Include="App.xaml" />
   </ItemGroup>
 
-	<Target Name="CopyFilesAfterBuild" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
-		<MakeDir Directories="$(TargetDir)Config\Languages" />
-		<MakeDir Directories="$(TargetDir)Config\Dictionaries\Web" />
+	<Target Name="CopyPortableData" AfterTargets="Publish">
+		<ItemGroup>
+			<PortableLanguages Include="$(ProjectDir)..\languages\*.ini" />
+			<PortableDictionaries Include="$(ProjectDir)Properties\Resources\Texts\*.*" Exclude="$(ProjectDir)Properties\Resources\Texts\AppLanguageDic.ini" />
+		</ItemGroup>
+		<Copy SourceFiles="@(PortableLanguages)" DestinationFolder="$(PublishDir)Data\Languages" />
+		<Copy SourceFiles="$(ProjectDir)Properties\Resources\Texts\AppLanguageDic.ini" DestinationFiles="$(PublishDir)Data\Languages\zh-CN.ini" />
+		<Copy SourceFiles="@(PortableDictionaries)" DestinationFolder="$(PublishDir)Data\Dictionaries\Web" />
+	</Target>
 
-		<Copy SourceFiles="$(ProjectDir)Properties\Resources\Texts\AppLanguageDic.ini" DestinationFiles="$(TargetDir)Config\Languages\zh-CN.ini" OverwriteReadOnlyFiles="true" />
+	<Target Name="CopyFilesAfterBuild" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
+		<MakeDir Directories="$(TargetDir)Data\Languages" />
+		<MakeDir Directories="$(TargetDir)Data\Dictionaries\Web" />
+
+		<Copy SourceFiles="$(ProjectDir)Properties\Resources\Texts\AppLanguageDic.ini" DestinationFiles="$(TargetDir)Data\Languages\zh-CN.ini" OverwriteReadOnlyFiles="true" />
 
 		<ItemGroup>
 			<LanguageFiles Include="$(SolutionDir)Languages\*.*" />
 		</ItemGroup>
-		<Copy SourceFiles="@(LanguageFiles)" DestinationFolder="$(TargetDir)Config\Languages" OverwriteReadOnlyFiles="true" />
+		<Copy SourceFiles="@(LanguageFiles)" DestinationFolder="$(TargetDir)Data\Languages" OverwriteReadOnlyFiles="true" />
 
 		<ItemGroup>
 			<WebDictFiles Include="$(ProjectDir)Properties\Resources\Texts\*.*" />
 		</ItemGroup>
-		<Copy SourceFiles="@(WebDictFiles)" DestinationFolder="$(TargetDir)Config\Dictionaries\Web" OverwriteReadOnlyFiles="true" />
+		<Copy SourceFiles="@(WebDictFiles)" DestinationFolder="$(TargetDir)Data\Dictionaries\Web" OverwriteReadOnlyFiles="true" />
 
-		<Delete Files="$(TargetDir)Config\Dictionaries\Web\AppLanguageDic.ini" />
+		<Delete Files="$(TargetDir)Data\Dictionaries\Web\AppLanguageDic.ini" />
 	</Target>
 	
 </Project>

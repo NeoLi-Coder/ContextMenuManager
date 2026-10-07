@@ -49,11 +49,15 @@ jobs:
       - name: Publish
         run: dotnet publish ${{ env.Project_Path }} -p:PublishProfile=Net10.0-Win64.pubxml
 
+      - name: Package portable version
+        shell: pwsh
+        run: Compress-Archive -Path ContextMenuManager/bin/ContextMenuManager_Portable -DestinationPath "ContextMenuManager/bin/ContextMenuManager-${{ env.release_version }}-win-x64-portable.zip"
+
       # Publish to GitHub releases
       - name: Publish
         uses: softprops/action-gh-release@v3
         with:
           files: |
-            ContextMenuManager/bin/Publish/ContextMenuManager*
+            ContextMenuManager/bin/*-portable.zip
           tag_name: "${{ env.release_version }}"
           generate_release_notes: true

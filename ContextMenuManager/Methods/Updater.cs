@@ -3,7 +3,6 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Xml;
 
 namespace ContextMenuManager.Methods
 {
@@ -66,27 +65,8 @@ namespace ContextMenuManager.Methods
                 info += "\r\n\r\n" + MachinedInfo(bodyXN.InnerText);
                 if (AppMessageBox.Show(info, AppString.General.AppName, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    var assetsXN = root.SelectSingleNode("assets");
-                    foreach (XmlNode itemXN in assetsXN.SelectNodes("item"))
-                    {
-                        var nameXN = itemXN.SelectSingleNode("name");
-                        if (nameXN != null && nameXN.InnerText.Contains(".exe"))
-                        {
-                            var urlXN = itemXN.SelectSingleNode("browser_download_url");
-                            var dlg = new DownloadDialog
-                            {
-                                Url = urlXN?.InnerText,
-                                FilePath = $@"{AppConfig.AppDataDir}\{webVer}.exe",
-                                Text = AppString.General.AppName
-                            };
-                            if (dlg.ShowDialog() == true)
-                            {
-                                AppMessageBox.Show(AppString.Message.UpdateSucceeded, null,
-                                    MessageBoxButton.OK, MessageBoxImage.Information);
-                                SingleInstance.Restart(null, dlg.FilePath);
-                            }
-                        }
-                    }
+                    ExternalProgram.OpenWebUrl(AppConfig.RequestUseGithub
+                        ? AppConfig.GithubLatest : AppConfig.GiteeReleases);
                 }
             }
         }

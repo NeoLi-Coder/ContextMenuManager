@@ -20,7 +20,7 @@ namespace ContextMenuManager.Methods
         }
 
 #if DEBUG
-        public const string DebugLogPath = "D:\\log.txt";
+        public static readonly string DebugLogPath = Path.Combine(AppContext.BaseDirectory, "log.txt");
         public const bool EnableLog = false;
 #endif
 
@@ -44,10 +44,10 @@ namespace ContextMenuManager.Methods
         public const string GiteeDonateRaw = "https://gitee.com/Jack251970/ContextMenuManager/raw/master/Donate.md";
         public const string GiteeDonate = "https://gitee.com/Jack251970/ContextMenuManager/blob/master/Donate.md";
 
-        public static readonly string AppConfigDir = $@"{AppContext.BaseDirectory}\Config";
+        public static readonly string AppConfigDir = $@"{AppContext.BaseDirectory}\Data";
         public static readonly string AppDataDir = Environment.ExpandEnvironmentVariables(@"%AppData%\ContextMenuManager");
-        public static readonly string AppDataConfigDir = $@"{AppDataDir}\Config";
-        public static readonly string ConfigDir = Directory.Exists(AppConfigDir) ? AppConfigDir : AppDataConfigDir;
+        public static readonly string AppDataConfigDir = $@"{AppDataDir}\Data";
+        public static readonly string ConfigDir = Directory.Exists(AppConfigDir) || !Directory.Exists(AppDataConfigDir) ? AppConfigDir : AppDataConfigDir;
         public static readonly bool SaveToAppDir = ConfigDir == AppConfigDir;
         public static readonly bool IsFirstRun = !Directory.Exists(ConfigDir);
         public static string ConfigIni = $@"{ConfigDir}\Config.ini";
@@ -89,7 +89,7 @@ namespace ContextMenuManager.Methods
         private static readonly IniReader ConfigReader = new(ConfigIni);
         private static readonly IniWriter ConfigWriter = new(ConfigIni);
 
-        private static string[] Paths => [AppDataDir, ConfigDir, ProgramsDir, RegBackupDir, MenuBackupDir, LangsDir, DicsDir, WebDicsDir, UserDicsDir];
+        private static string[] Paths => [ConfigDir, ProgramsDir, RegBackupDir, MenuBackupDir, LangsDir, DicsDir, WebDicsDir, UserDicsDir];
 
         public static void BackupWinX()
         {
@@ -182,11 +182,11 @@ namespace ContextMenuManager.Methods
             LanguageIniPath = $@"{devLangsDir}\{language}.ini";
             if (!File.Exists(LanguageIniPath))
             {
-                // 如果开发目录中的语言文件不存在，回退到Config\Languages目录
+                // 如果开发目录中的语言文件不存在，回退到Data\Languages目录
                 LanguageIniPath = $@"{LangsDir}\{language}.ini";
             }
 #else
-            // 在发布环境中使用Config\Languages目录
+            // 在发布环境中使用Data\Languages目录
             LanguageIniPath = $@"{LangsDir}\{language}.ini";
 #endif
 
