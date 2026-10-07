@@ -90,7 +90,6 @@ namespace ContextMenuManager.Methods
             public static string AboutApp { get; set; }
             public static string Dictionaries { get; set; }
             public static string AppLanguage { get; set; }
-            public static string Donate { get; set; }
             public static string BackupRestore { get; set; }
         }
 
@@ -230,7 +229,6 @@ namespace ContextMenuManager.Methods
             public static string DefaultText { get; set; }
             public static string OldTranslation { get; set; }
             public static string NewTranslation { get; set; }
-            public static string DonateInfo { get; set; }
             public static string NewBackupItem { get; set; }
             public static string BackupContent { get; set; }
             public static string BackupMode { get; set; }
@@ -363,7 +361,6 @@ namespace ContextMenuManager.Methods
             public static string Translators { get; set; }
             public static string AboutApp { get; set; }
             public static string Dictionaries { get; set; }
-            public static string Donate { get; set; }
             public static string DonationList { get; set; }
             public static string ConfigPath { get; set; }
             public static string AppDataDir { get; set; }

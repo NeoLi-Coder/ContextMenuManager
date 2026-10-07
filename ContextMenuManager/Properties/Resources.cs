@@ -82,10 +82,8 @@ namespace ContextMenuManager.Properties
             return text;
         }
 
-        public static Image Donate => GetImage("pack://application:,,,/ContextMenuManager;component/Properties/Resources/Images/Donate.png");
         public static Image Logo => GetImage("pack://application:,,,/ContextMenuManager;component/Properties/Resources/Images/Logo.png");
         public static Image MicrosoftStore => GetImage("pack://application:,,,/ContextMenuManager;component/Properties/Resources/Images/MicrosoftStore.png");
-        public static Image BuyMeCoffe => GetImage("pack://application:,,,/ContextMenuManager;component/Properties/Resources/Images/BuyMeCoffe.png");
         public static Image Home => GetImage("pack://application:,,,/ContextMenuManager;component/Properties/Resources/Images/Home.png");
         public static Image Type => GetImage("pack://application:,,,/ContextMenuManager;component/Properties/Resources/Images/Type.png");
         public static Image Star => GetImage("pack://application:,,,/ContextMenuManager;component/Properties/Resources/Images/Star.png");

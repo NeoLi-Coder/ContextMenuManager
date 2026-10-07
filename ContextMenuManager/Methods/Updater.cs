@@ -1,6 +1,7 @@
 using ContextMenuManager.Controls;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -106,7 +107,8 @@ namespace ContextMenuManager.Methods
             await WriteFiles("Dictionaries", filePaths, (s, f) => { succeeded1 = s; failed1 = f; });
 
             dirUrl = AppConfig.RequestUseGithub ? AppConfig.GithubLangsRawDir : AppConfig.GiteeLangsRawDir;
-            filePaths = Directory.GetFiles(AppConfig.LangsDir, "*.ini");
+            filePaths = Directory.GetFiles(AppConfig.LangsDir, "*.ini")
+                .Where(path => AppConfig.IsSupportedLanguage(Path.GetFileNameWithoutExtension(path))).ToArray();
             await WriteFiles("Languages", filePaths, (s, f) => { succeeded2 = s; failed2 = f; });
 
             if (isManual)

@@ -20,7 +20,7 @@ namespace ContextMenuManager
 
         private void SetException(Exception exception)
         {
-            var websiteUrl = "https://github.com/Jack251970/ContextMenuManager/issues";
+            var websiteUrl = "https://github.com/NeoLi-Coder/ContextMenuManager/issues";
 
             var paragraph = Hyperlink("Please open an issue:", websiteUrl);
             ErrorTextbox.Document.Blocks.Add(paragraph);

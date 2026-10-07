@@ -7,8 +7,8 @@ namespace ContextMenuManager.Views
 {
     public partial class AboutAppView : UserControl
     {
-        private const string GitHubUrl = "https://github.com/Jack251970/ContextMenuManager";
-        private const string GiteeUrl = "https://gitee.com/Jack251970/ContextMenuManager";
+        private const string GitHubUrl = "https://github.com/NeoLi-Coder/ContextMenuManager";
+        private const string UpstreamUrl = "https://github.com/Jack251970/ContextMenuManager";
 
         public AboutAppView()
         {
@@ -22,8 +22,8 @@ namespace ContextMenuManager.Views
             AppNameText.Text = AppString.General.AppName;
             GitHubLinkText.Content = $"{AppString.About.GitHub ?? "GitHub"}: {GitHubUrl}";
             GitHubLinkText.NavigateUri = new Uri(GitHubUrl);
-            GiteeLinkText.Content = $"{AppString.About.Gitee ?? "Gitee"}: {GiteeUrl}";
-            GiteeLinkText.NavigateUri = new Uri(GiteeUrl);
+            UpstreamLinkText.Content = $"{(AppConfig.Language.StartsWith("zh", StringComparison.OrdinalIgnoreCase) ? "上游项目" : "Upstream")}: {UpstreamUrl}";
+            UpstreamLinkText.NavigateUri = new Uri(UpstreamUrl);
             LicenseText.Text = $"{AppString.About.License ?? "License"}: GPL License";
             CheckUpdateButton.Content = AppString.About.CheckUpdate ?? "Check Update";
         }

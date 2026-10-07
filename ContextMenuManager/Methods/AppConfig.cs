@@ -31,8 +31,6 @@ namespace ContextMenuManager.Methods
         public const string GithubShellNewApi = "https://api.github.com/repos/Jack251970/ContextMenuManager/contents/ContextMenuManager/Properties/Resources/ShellNew";
         public const string GithubShellNewRawDir = "https://raw.githubusercontent.com/Jack251970/ContextMenuManager/master/ContextMenuManager/Properties/Resources/ShellNew";
         public const string GithubTexts = "https://raw.githubusercontent.com/Jack251970/ContextMenuManager/master/ContextMenuManager/Properties/Resources/Texts";
-        public const string GithubDonateRaw = "https://raw.githubusercontent.com/Jack251970/ContextMenuManager/master/Donate.md";
-        public const string GithubDonate = "https://github.com/Jack251970/ContextMenuManager/blob/master/Donate.md";
 
         public const string GiteeReleases = "https://gitee.com/Jack251970/ContextMenuManager/releases";
         public const string GiteeLatestApi = "https://gitee.com/api/v5/repos/Jack251970/ContextMenuManager/releases/latest";
@@ -41,8 +39,6 @@ namespace ContextMenuManager.Methods
         public const string GiteeShellNewApi = "https://gitee.com/api/v5/repos/Jack251970/ContextMenuManager/contents/ContextMenuManager/Properties/Resources/ShellNew";
         public const string GiteeShellNewRawDir = "https://gitee.com/Jack251970/ContextMenuManager/raw/master/ContextMenuManager/Properties/Resources/ShellNew";
         public const string GiteeTexts = "https://gitee.com/Jack251970/ContextMenuManager/raw/master/ContextMenuManager/Properties/Resources/Texts";
-        public const string GiteeDonateRaw = "https://gitee.com/Jack251970/ContextMenuManager/raw/master/Donate.md";
-        public const string GiteeDonate = "https://gitee.com/Jack251970/ContextMenuManager/blob/master/Donate.md";
 
         public static readonly string AppConfigDir = $@"{AppContext.BaseDirectory}\Data";
         public static readonly string AppDataDir = Environment.ExpandEnvironmentVariables(@"%AppData%\ContextMenuManager");
@@ -175,6 +171,7 @@ namespace ContextMenuManager.Methods
                 return;
             }
             if (language == "") language = CultureInfo.CurrentUICulture.Name;
+            if (!IsSupportedLanguage(language)) language = "zh-CN";
 
 #if DEBUG
             // 在开发环境中使用项目根目录下的languages目录
@@ -196,6 +193,10 @@ namespace ContextMenuManager.Methods
                 Language = "";
             }
         }
+
+        public static bool IsSupportedLanguage(string code) =>
+            string.Equals(code, "zh-CN", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(code, "zh-TW", StringComparison.OrdinalIgnoreCase);
 
         public static string LanguageIniPath { get; private set; }
 

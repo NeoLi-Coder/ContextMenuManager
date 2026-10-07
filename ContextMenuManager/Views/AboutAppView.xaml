@@ -49,7 +49,7 @@
                 <StackPanel>
                     <ui:HyperlinkButton x:Name="GitHubLinkText" Margin="0,18,0,0" />
 
-                    <ui:HyperlinkButton x:Name="GiteeLinkText" Margin="0,10,0,0" />
+                    <ui:HyperlinkButton x:Name="UpstreamLinkText" Margin="0,10,0,0" />
 
                     <Separator Margin="0,18,0,18" />
 

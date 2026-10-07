@@ -86,8 +86,8 @@ namespace ContextMenuManager.Controls
         private static bool ShowListDialog(string title, MyList list, MainWindow owner)
         {
             var dialog = ContentDialogHost.CreateDialog(title, owner);
-            // 此处禁止主按钮，仅支持关闭按钮提供完成更改的功能
-            dialog.IsPrimaryButtonEnabled = false;
+            dialog.PrimaryButtonText = string.Empty;
+            dialog.DefaultButton = ContentDialogButton.Close;
             dialog.CloseButtonText = AppString.Dialog.OK;
 
             list.MinWidth = 500;

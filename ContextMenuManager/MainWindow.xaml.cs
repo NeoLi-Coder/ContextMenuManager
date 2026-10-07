@@ -17,7 +17,7 @@ namespace ContextMenuManager
 {
     public partial class MainWindow : Window
     {
-        public static readonly string DefaultText = $"Ver: {InfoHelper.ProductVersion}    {InfoHelper.CompanyName}";
+        public static readonly string DefaultText = $"Ver: {InfoHelper.ProductVersion}";
 
         private ShellList ShellList { get => field ??= new(); }
         private ShellNewList ShellNewList { get => field ??= new(); }
@@ -33,7 +33,6 @@ namespace ContextMenuManager
         private BackupView BackupView { get => field ??= new(); }
         private DictionariesView DictionariesView { get => field ??= new(); }
         private AboutAppView AboutAppView { get => field ??= new(); }
-        private DonateView DonateView { get => field ??= new(); }
 
         private TextBox SearchBox { get; set; }
 
@@ -108,7 +107,6 @@ namespace ContextMenuManager
             null, // BackupRestore
             null, // Dictionaries
             null, // AboutApp
-            null, // Donate
         };
 
         private readonly int[] lastItemIndex = new int[5];
@@ -317,7 +315,6 @@ namespace ContextMenuManager
                 AppString.SideBar.BackupRestore ?? "Backup",
                 AppString.SideBar.Dictionaries ?? "Dictionaries",
                 AppString.SideBar.AboutApp ?? "About",
-                AppString.SideBar.Donate ?? "Donate",
             };
         }
 
@@ -475,11 +472,6 @@ namespace ContextMenuManager
                     AboutAppView.RefreshContent();
                     ShowControl(AboutAppView);
                     currentTag = "about_app";
-                    break;
-                case 5:
-                    DonateView.RefreshContent();
-                    ShowControl(DonateView);
-                    currentTag = "about_donate";
                     break;
             }
         }
@@ -643,7 +635,6 @@ namespace ContextMenuManager
                 "about_backup" => DefaultText,
                 "about_dict" => DefaultText,
                 "about_app" => DefaultText,
-                "about_donate" => DefaultText,
                 _ => DefaultText
             };
         }

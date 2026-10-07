@@ -43,12 +43,14 @@ namespace ContextMenuManager.Views
             {
                 foreach (var fileName in Directory.GetFiles(AppConfig.LangsDir, "*.ini"))
                 {
+                    var langCode = Path.GetFileNameWithoutExtension(fileName);
+                    if (!AppConfig.IsSupportedLanguage(langCode)) continue;
+
                     var writer = new IniWriter(fileName);
                     var languageName = writer.GetValue("General", "Language");
                     var translator = writer.GetValue("General", "Translator");
                     var translatorUrl = writer.GetValue("General", "TranslatorUrl");
 
-                    var langCode = Path.GetFileNameWithoutExtension(fileName);
                     if (string.IsNullOrWhiteSpace(languageName))
                     {
                         languageName = langCode;
@@ -197,6 +199,7 @@ namespace ContextMenuManager.Views
                 langs[i] = Path.GetFileNameWithoutExtension(nameNode?.InnerText ?? string.Empty);
             }
 
+            langs = langs.Where(AppConfig.IsSupportedLanguage).ToArray();
             var selection = await PromptLanguageSelectionAsync(langs);
             if (string.IsNullOrWhiteSpace(selection))
             {

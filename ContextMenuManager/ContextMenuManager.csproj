@@ -66,7 +66,7 @@
 
 	<Target Name="CopyPortableData" AfterTargets="Publish">
 		<ItemGroup>
-			<PortableLanguages Include="$(ProjectDir)..\languages\*.ini" />
+			<PortableLanguages Include="$(ProjectDir)..\languages\zh-CN.ini;$(ProjectDir)..\languages\zh-TW.ini" />
 			<PortableDictionaries Include="$(ProjectDir)Properties\Resources\Texts\*.*" Exclude="$(ProjectDir)Properties\Resources\Texts\AppLanguageDic.ini" />
 		</ItemGroup>
 		<Copy SourceFiles="@(PortableLanguages)" DestinationFolder="$(PublishDir)Data\Languages" />
@@ -81,7 +81,7 @@
 		<Copy SourceFiles="$(ProjectDir)Properties\Resources\Texts\AppLanguageDic.ini" DestinationFiles="$(TargetDir)Data\Languages\zh-CN.ini" OverwriteReadOnlyFiles="true" />
 
 		<ItemGroup>
-			<LanguageFiles Include="$(SolutionDir)Languages\*.*" />
+			<LanguageFiles Include="$(ProjectDir)..\languages\zh-CN.ini;$(ProjectDir)..\languages\zh-TW.ini" />
 		</ItemGroup>
 		<Copy SourceFiles="@(LanguageFiles)" DestinationFolder="$(TargetDir)Data\Languages" OverwriteReadOnlyFiles="true" />
 
