@@ -143,6 +143,8 @@ namespace ContextMenuManager
             BuildToolBar();
             SwitchTab();
 
+            Loaded += MainWindow_Loaded;
+
             // First-run language download prompt
             Loaded += (_, _) => FirstRunDownloadLanguage();
         }
@@ -653,6 +655,12 @@ namespace ContextMenuManager
 
         // Window events
 
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            Loaded -= MainWindow_Loaded;
+            MainWindowPlacement.Restore(this);
+        }
+
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             if (ExplorerRestarter.IsPendingRestart)
@@ -670,6 +678,7 @@ namespace ContextMenuManager
             }
 
             AppConfig.MainWindowSize = new DrawingSize((int)Width, (int)Height);
+            MainWindowPlacement.SavePosition(this);
             Opacity = 0;
         }
 

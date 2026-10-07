@@ -366,5 +366,21 @@ namespace ContextMenuManager.Methods
             }
             set => SetWindowValue("MainWindowSize", value.Width + "," + value.Height);
         }
+
+        /// <summary>窗口左上角的屏幕像素坐标；未保存时使用首次启动居中。</summary>
+        public static Point? MainWindowPosition
+        {
+            get
+            {
+                var str = GetWindowValue("MainWindowPosition");
+                var index = str.IndexOf(',');
+                if (index == -1) return null;
+                if (int.TryParse(str[..index], out var x))
+                    if (int.TryParse(str[(index + 1)..], out var y))
+                        return new Point(x, y);
+                return null;
+            }
+            set => SetWindowValue("MainWindowPosition", value.HasValue ? value.Value.X + "," + value.Value.Y : "");
+        }
     }
 }
