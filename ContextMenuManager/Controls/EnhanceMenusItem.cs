@@ -106,6 +106,13 @@ namespace ContextMenuManager.Controls
 
         private static void WriteCommandValue(XmlNode cmdXE, string regPath)
         {
+            var copyPathMode = ((XmlElement)cmdXE).GetAttribute("CopyPathMode");
+            if (copyPathMode == "native" || copyPathMode == "forward")
+            {
+                Registry.SetValue(regPath, "", CopyPathMenu.GetCommand(copyPathMode));
+                Registry.SetValue(RegistryEx.GetParentPath(regPath), "CopyPathMode", copyPathMode);
+                return;
+            }
             var fnXE = (XmlElement)cmdXE.SelectSingleNode("FileName");
             var argXE = (XmlElement)cmdXE.SelectSingleNode("Arguments");
             var seXE = (XmlElement)cmdXE.SelectSingleNode("ShellExecute");

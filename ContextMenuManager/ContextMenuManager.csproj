@@ -44,6 +44,7 @@
   </ItemGroup>
 	
   <ItemGroup>
+    <ProjectReference Include="..\ContextMenuManager.CopyPath\ContextMenuManager.CopyPath.csproj" ReferenceOutputAssembly="false" SkipGetTargetFrameworkProperties="true" />
     <Content Include="Properties\AppIcon.ico" />
     <Resource Include="Properties\Resources\**\*.*" />
   </ItemGroup>
@@ -51,6 +52,17 @@
   <ItemGroup>
     <Page Include="App.xaml" />
   </ItemGroup>
+
+  <Target Name="CopyPathHelperAfterBuild" AfterTargets="Build">
+    <MSBuild Projects="..\ContextMenuManager.CopyPath\ContextMenuManager.CopyPath.csproj" Targets="GetCopyPathFiles" Properties="Configuration=$(Configuration)" RemoveProperties="PublishProfile;PublishDir">
+      <Output TaskParameter="TargetOutputs" ItemName="CopyPathHelperFiles" />
+    </MSBuild>
+    <Copy SourceFiles="@(CopyPathHelperFiles)" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="PublishCopyPathHelper" AfterTargets="Publish">
+    <Exec Command="dotnet publish &quot;$(MSBuildProjectDirectory)\..\ContextMenuManager.CopyPath\ContextMenuManager.CopyPath.csproj&quot; --configuration $(Configuration) -p:RuntimeIdentifier=$(RuntimeIdentifier) -p:SelfContained=$(SelfContained) -p:PublishSingleFile=false --output &quot;$([System.IO.Path]::GetFullPath('$(PublishDir)'))&quot;" />
+  </Target>
 
 	<Target Name="CopyPortableData" AfterTargets="Publish">
 		<ItemGroup>

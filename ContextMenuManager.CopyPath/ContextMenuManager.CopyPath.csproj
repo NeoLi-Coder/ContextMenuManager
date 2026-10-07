@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <UseWPF>true</UseWPF>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+  <Target Name="GetCopyPathFiles" Returns="@(CopyPathFiles)">
+    <ItemGroup>
+      <CopyPathFiles Include="$(TargetDir)ContextMenuManager.CopyPath.exe;$(TargetDir)ContextMenuManager.CopyPath.dll;$(TargetDir)ContextMenuManager.CopyPath.deps.json;$(TargetDir)ContextMenuManager.CopyPath.runtimeconfig.json" />
+    </ItemGroup>
+  </Target>
+</Project>

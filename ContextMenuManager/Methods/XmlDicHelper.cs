@@ -51,6 +51,7 @@ namespace ContextMenuManager.Methods
                 AppConfig.UserUwpModeItemsDic, AppResources.UwpModeItemsDic);
             LoadDic(EnhanceMenusDic, AppConfig.WebEnhanceMenusDic,
                 AppConfig.UserEnhanceMenusDic, AppResources.EnhanceMenusDic);
+            CopyPathMenu.Upgrade(EnhanceMenusDic[0]);
             LoadDic(DetailedEditDic, AppConfig.WebDetailedEditDic,
                 AppConfig.UserDetailedEditDic, AppResources.DetailedEditDic);
 
