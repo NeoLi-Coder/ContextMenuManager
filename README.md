@@ -40,6 +40,8 @@ Windows 右键菜单管理器。本仓库 fork 自 [Jack251970/ContextMenuManage
 
 当前项目基于 .NET 10 / WPF，现有发布配置为 Windows x64、自包含部署，使用该发布包无需另装 .NET。旧版 Windows 的支持情况请参考上游历史版本，本 fork 不承诺兼容 Windows 7、8、8.1。
 
+本地打包与 GitHub 发版使用同一入口：在仓库根目录用 PowerShell 7 运行 `./scripts/Publish-Portable.ps1`。将输出的 `ContextMenuManager/bin/<版本号>/*-portable.zip` 整包分发，不要用普通 `bin/Release` 构建文件覆盖便携版。
+
 复制路径验证可在仓库根目录执行（默认使用本地发布目录）：
 
 ```powershell

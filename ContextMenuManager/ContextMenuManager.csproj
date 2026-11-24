@@ -44,7 +44,7 @@
   </ItemGroup>
 	
   <ItemGroup>
-    <ProjectReference Include="..\ContextMenuManager.CopyPath\ContextMenuManager.CopyPath.csproj" ReferenceOutputAssembly="false" SkipGetTargetFrameworkProperties="true" />
+    <ProjectReference Include="..\ContextMenuManager.CopyPath\ContextMenuManager.CopyPath.csproj" ReferenceOutputAssembly="false" Private="false" SkipGetTargetFrameworkProperties="true" AdditionalProperties="RuntimeIdentifier=$(RuntimeIdentifier);SelfContained=$(SelfContained)" />
     <Content Include="Properties\AppIcon.ico" />
     <Resource Include="Properties\Resources\**\*.*" />
     <Resource Include="..\languages\zh-CN.ini" Link="Properties\Resources\Texts\AppLanguageDic.ini" />
@@ -54,15 +54,20 @@
     <Page Include="App.xaml" />
   </ItemGroup>
 
-  <Target Name="CopyPathHelperAfterBuild" AfterTargets="Build">
-    <MSBuild Projects="..\ContextMenuManager.CopyPath\ContextMenuManager.CopyPath.csproj" Targets="GetCopyPathFiles" Properties="Configuration=$(Configuration)" RemoveProperties="PublishProfile;PublishDir">
+  <Target Name="ResolveCopyPathHelper">
+    <MSBuild Projects="..\ContextMenuManager.CopyPath\ContextMenuManager.CopyPath.csproj" Targets="GetCopyPathFiles" Properties="Configuration=$(Configuration);RuntimeIdentifier=$(RuntimeIdentifier);SelfContained=$(SelfContained)" RemoveProperties="PublishProfile;PublishDir">
       <Output TaskParameter="TargetOutputs" ItemName="CopyPathHelperFiles" />
     </MSBuild>
+  </Target>
+
+  <Target Name="CopyPathHelperAfterBuild" AfterTargets="Build" DependsOnTargets="ResolveCopyPathHelper">
     <Copy SourceFiles="@(CopyPathHelperFiles)" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
   </Target>
 
-  <Target Name="PublishCopyPathHelper" AfterTargets="Publish">
-    <Exec Command="dotnet publish &quot;$(MSBuildProjectDirectory)\..\ContextMenuManager.CopyPath\ContextMenuManager.CopyPath.csproj&quot; --configuration $(Configuration) -p:RuntimeIdentifier=$(RuntimeIdentifier) -p:SelfContained=$(SelfContained) -p:PublishSingleFile=false --output &quot;$([System.IO.Path]::GetFullPath('$(PublishDir)'))&quot;" />
+  <Target Name="PublishCopyPathHelper" AfterTargets="ComputeFilesToPublish" DependsOnTargets="ResolveCopyPathHelper">
+    <ItemGroup>
+      <ResolvedFileToPublish Include="@(CopyPathHelperFiles)" CopyToPublishDirectory="Always" RelativePath="%(CopyPathHelperFiles.Filename)%(CopyPathHelperFiles.Extension)" />
+    </ItemGroup>
   </Target>
 
 	<ItemGroup>

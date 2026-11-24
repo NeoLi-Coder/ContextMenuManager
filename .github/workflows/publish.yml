@@ -15,9 +15,6 @@ jobs:
     
     runs-on: windows-latest
 
-    env:
-      Project_Path: ContextMenuManager/ContextMenuManager.csproj
-
     steps:
 
       # Checkout codes
@@ -31,33 +28,17 @@ jobs:
           dotnet-version: |
             10.0.x
 
-      # Restore dependencies
-      - name: Restore dependencies
-        run: dotnet restore ${{ env.Project_Path }}
-
-      # Build the project
-      - name: Build
-        run: dotnet build ${{ env.Project_Path }} --configuration Release --no-restore
-
-      # Get package version
-      - name: Get Package Version
-        run: |
-         $version = [system.diagnostics.fileversioninfo]::getversioninfo("ContextMenuManager\bin\Release\ContextMenuManager.dll").fileversion
-         echo "release_version=$version" | out-file -filepath $env:github_env -encoding utf-8 -append
-
-      # Publish the project
-      - name: Publish
-        run: dotnet publish ${{ env.Project_Path }} -p:PublishProfile=Net10.0-Win64.pubxml
-
       - name: Package portable version
         shell: pwsh
-        run: Compress-Archive -Path ContextMenuManager/bin/ContextMenuManager_Portable -DestinationPath "ContextMenuManager/bin/ContextMenuManager-${{ env.release_version }}-win-x64-portable.zip"
+        run: |
+          $package = ./scripts/Publish-Portable.ps1
+          "release_version=$($package.Directory.Name)" >> $env:GITHUB_ENV
+          "release_package=$($package.FullName)" >> $env:GITHUB_ENV
 
       # Publish to GitHub releases
       - name: Publish
         uses: softprops/action-gh-release@v3
         with:
-          files: |
-            ContextMenuManager/bin/*-portable.zip
+          files: ${{ env.release_package }}
           tag_name: "${{ env.release_version }}"
           generate_release_notes: true
