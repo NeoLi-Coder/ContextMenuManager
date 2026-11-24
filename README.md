@@ -10,7 +10,7 @@ Windows 右键菜单管理器。本仓库 fork 自 [Jack251970/ContextMenuManage
 
 - 使用独立的 `ContextMenuManager.CopyPath.exe` 写入剪贴板，替代旧的 PowerShell、MSHTA 命令和系统处理器。
 - 提供“复制路径”和“复制路径（正斜杠）”两种格式，例如 `C:\目录\文件.txt` 与 `C:/目录/文件.txt`，复制结果不带引号。
-- 支持盘符根目录、中文、空格、特殊字符和 UNC 路径；菜单按单项选择处理。
+- 在“其他规则 → 所有对象”启用菜单后，可多选文件、文件夹或混选两者。一次复制全部完整路径，每行一个；单选时没有额外换行。两种格式均支持盘符根目录、中文、空格、特殊字符和 UNC 路径。
 - 自动识别并迁移本程序旧版复制路径菜单，修改注册表前导出备份到 `Data/RegBackup/<计算机名>/CopyPathUpgrade`。用户字典中的同名菜单不自动迁移。
 - 提供 [scripts/Verify-CopyPath.ps1](scripts/Verify-CopyPath.ps1)，用于验证两种格式的剪贴板结果。
 
