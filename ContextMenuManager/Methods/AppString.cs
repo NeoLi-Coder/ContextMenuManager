@@ -361,7 +361,6 @@ namespace ContextMenuManager.Methods
             public static string Translators { get; set; }
             public static string AboutApp { get; set; }
             public static string Dictionaries { get; set; }
-            public static string DonationList { get; set; }
             public static string ConfigPath { get; set; }
             public static string AppDataDir { get; set; }
             public static string AppDir { get; set; }

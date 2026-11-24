@@ -47,6 +47,7 @@
     <ProjectReference Include="..\ContextMenuManager.CopyPath\ContextMenuManager.CopyPath.csproj" ReferenceOutputAssembly="false" SkipGetTargetFrameworkProperties="true" />
     <Content Include="Properties\AppIcon.ico" />
     <Resource Include="Properties\Resources\**\*.*" />
+    <Resource Include="..\languages\zh-CN.ini" Link="Properties\Resources\Texts\AppLanguageDic.ini" />
   </ItemGroup>
 
   <ItemGroup>
@@ -64,33 +65,19 @@
     <Exec Command="dotnet publish &quot;$(MSBuildProjectDirectory)\..\ContextMenuManager.CopyPath\ContextMenuManager.CopyPath.csproj&quot; --configuration $(Configuration) -p:RuntimeIdentifier=$(RuntimeIdentifier) -p:SelfContained=$(SelfContained) -p:PublishSingleFile=false --output &quot;$([System.IO.Path]::GetFullPath('$(PublishDir)'))&quot;" />
   </Target>
 
+	<ItemGroup>
+		<PortableLanguages Include="..\languages\zh-CN.ini;..\languages\zh-TW.ini" />
+		<PortableDictionaries Include="Properties\Resources\Texts\*.*" />
+	</ItemGroup>
+
 	<Target Name="CopyPortableData" AfterTargets="Publish">
-		<ItemGroup>
-			<PortableLanguages Include="$(ProjectDir)..\languages\zh-CN.ini;$(ProjectDir)..\languages\zh-TW.ini" />
-			<PortableDictionaries Include="$(ProjectDir)Properties\Resources\Texts\*.*" Exclude="$(ProjectDir)Properties\Resources\Texts\AppLanguageDic.ini" />
-		</ItemGroup>
 		<Copy SourceFiles="@(PortableLanguages)" DestinationFolder="$(PublishDir)Data\Languages" />
-		<Copy SourceFiles="$(ProjectDir)Properties\Resources\Texts\AppLanguageDic.ini" DestinationFiles="$(PublishDir)Data\Languages\zh-CN.ini" />
 		<Copy SourceFiles="@(PortableDictionaries)" DestinationFolder="$(PublishDir)Data\Dictionaries\Web" />
 	</Target>
 
 	<Target Name="CopyFilesAfterBuild" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
-		<MakeDir Directories="$(TargetDir)Data\Languages" />
-		<MakeDir Directories="$(TargetDir)Data\Dictionaries\Web" />
-
-		<Copy SourceFiles="$(ProjectDir)Properties\Resources\Texts\AppLanguageDic.ini" DestinationFiles="$(TargetDir)Data\Languages\zh-CN.ini" OverwriteReadOnlyFiles="true" />
-
-		<ItemGroup>
-			<LanguageFiles Include="$(ProjectDir)..\languages\zh-CN.ini;$(ProjectDir)..\languages\zh-TW.ini" />
-		</ItemGroup>
-		<Copy SourceFiles="@(LanguageFiles)" DestinationFolder="$(TargetDir)Data\Languages" OverwriteReadOnlyFiles="true" />
-
-		<ItemGroup>
-			<WebDictFiles Include="$(ProjectDir)Properties\Resources\Texts\*.*" />
-		</ItemGroup>
-		<Copy SourceFiles="@(WebDictFiles)" DestinationFolder="$(TargetDir)Data\Dictionaries\Web" OverwriteReadOnlyFiles="true" />
-
-		<Delete Files="$(TargetDir)Data\Dictionaries\Web\AppLanguageDic.ini" />
+		<Copy SourceFiles="@(PortableLanguages)" DestinationFolder="$(TargetDir)Data\Languages" OverwriteReadOnlyFiles="true" />
+		<Copy SourceFiles="@(PortableDictionaries)" DestinationFolder="$(TargetDir)Data\Dictionaries\Web" OverwriteReadOnlyFiles="true" />
 	</Target>
 	
 </Project>
