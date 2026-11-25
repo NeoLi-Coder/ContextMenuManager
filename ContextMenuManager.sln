@@ -5,6 +5,8 @@ VisualStudioVersion = 18.0.11018.127
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContextMenuManager", "ContextMenuManager\ContextMenuManager.csproj", "{EF7E60E9-3565-42BA-AFB3-7FE73A1B011C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContextMenuManager.CopyPath", "ContextMenuManager.CopyPath\ContextMenuManager.CopyPath.csproj", "{CF6B40C2-11B7-4BD6-9D01-D690E4EAB994}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CE0AD55A-5ABF-40A7-931E-FC04B0FFC6FA}"
 	ProjectSection(SolutionItems) = preProject
 		.gitattributes = .gitattributes
@@ -18,7 +20,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LICENSE = LICENSE
 		Logo\Logo.png = Logo\Logo.png
 		.github\workflows\publish.yml = .github\workflows\publish.yml
-		README-en.md = README-en.md
 		README.md = README.md
 		.github\workflows\remove-old-artifacts.yml = .github\workflows\remove-old-artifacts.yml
 		Screenshot\Screenshot-en.png = Screenshot\Screenshot-en.png
@@ -35,6 +36,10 @@ Global
 		{EF7E60E9-3565-42BA-AFB3-7FE73A1B011C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF7E60E9-3565-42BA-AFB3-7FE73A1B011C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF7E60E9-3565-42BA-AFB3-7FE73A1B011C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF6B40C2-11B7-4BD6-9D01-D690E4EAB994}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF6B40C2-11B7-4BD6-9D01-D690E4EAB994}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF6B40C2-11B7-4BD6-9D01-D690E4EAB994}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF6B40C2-11B7-4BD6-9D01-D690E4EAB994}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

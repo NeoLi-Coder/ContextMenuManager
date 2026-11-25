@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net10.0-windows</TargetFramework>
+    <RuntimeIdentifiers Condition="'$(PublishProfile)' == 'Net10.0-Win64.pubxml' Or '$(PublishProfile)' == 'Net10.0-Win64'">win-x64</RuntimeIdentifiers>
     <OutputType>WinExe</OutputType>
     <UseWPF>true</UseWPF>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>

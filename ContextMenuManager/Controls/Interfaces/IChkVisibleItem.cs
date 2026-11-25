@@ -1,7 +1,6 @@
 using ContextMenuManager.Methods;
 using iNKORE.UI.WPF.Modern.Controls;
 using System;
-using System.Windows;
 
 namespace ContextMenuManager.Controls.Interfaces
 {
@@ -13,8 +12,6 @@ namespace ContextMenuManager.Controls.Interfaces
 
     internal sealed class VisibleCheckBox : ToggleSwitch
     {
-        public Action CheckChanged;
-
         public Func<bool> PreCheckChanging;
 
         private bool _loading;
@@ -24,12 +21,16 @@ namespace ContextMenuManager.Controls.Interfaces
         {
             MinWidth = 0;
             Header = OnContent = OffContent = null;
-            Toggled += VisibleCheckBox_Toggled;
         }
 
         public VisibleCheckBox(IChkVisibleItem item, bool isShellStoreDialog = false) : this()
         {
             var listItem = (MyListItem)item;
+            _loading = true;
+            Toggled += (s, e) =>
+            {
+                if (!_loading) item.ItemVisible = IsOn;
+            };
             listItem.AddCtr(this);
 
             listItem.Control.Loaded += (s, e) =>
@@ -44,20 +45,14 @@ namespace ContextMenuManager.Controls.Interfaces
                 }
                 finally
                 {
-                    CheckChanged += () => item.ItemVisible = IsOn;
                     _loading = false;
                 }
             };
         }
 
-        private void VisibleCheckBox_Toggled(object sender, RoutedEventArgs e)
-        {
-            CheckChanged?.Invoke();
-        }
-
         protected override void OnToggled()
         {
-            // We are loading the initial state, just set the toggle without invoking CheckChanged
+            // 同步显示状态时保留控件通知，不弹确认框，也不写回菜单。
             if (_loading)
             {
                 base.OnToggled();

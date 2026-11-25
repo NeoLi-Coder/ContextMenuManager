@@ -25,7 +25,12 @@ namespace ContextMenuManager.Controls
             set
             {
                 if (value) WriteSubKeysValue(ItemXE, RegPath);
-                else RegistryEx.DeleteKeyTree(RegPath);
+                else
+                {
+                    if (ItemXE.SelectSingleNode("SubKey/DropTarget[@CopyPathMode]") is XmlElement target)
+                        CopyPathMenu.UnregisterTarget(RegPath, target.GetAttribute("CopyPathMode"));
+                    RegistryEx.DeleteKeyTree(RegPath);
+                }
             }
         }
 
@@ -91,6 +96,8 @@ namespace ContextMenuManager.Controls
                 //按照规则Command节点无默认值则创建文件
                 WriteCommandValue(keyXN, regPath);
             }
+            else if (keyXN is XmlElement { Name: "DropTarget" } target && target.HasAttribute("CopyPathMode"))
+                CopyPathMenu.RegisterTarget(RegistryEx.GetParentPath(regPath), target.GetAttribute("CopyPathMode"));
             WriteAttributesValue(keyXN.SelectSingleNode("Value"), regPath);
 
             var subKeyXN = keyXN.SelectSingleNode("SubKey");
