@@ -62,8 +62,9 @@ ValueKind为键值类型，默认键值类型ValueKind为REG_DWORD，为默认�
         <Culture>en-US</Culture>
       </Text>
       <RestartExplorer/>
-      <Rule RegPath='\NamingTemplates' ValueName='ShortcutNameTemplate' On='%s' ValueKind='REG_SZ'/>
-      <Rule RegPath='HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\NamingTemplates' ValueName='ShortcutNameTemplate' On='%s' ValueKind='REG_SZ'/>
+      <!-- 命名模板须保留 .lnk 扩展名，确保系统仍按快捷方式解析目标和图标。 -->
+      <Rule RegPath='\NamingTemplates' ValueName='ShortcutNameTemplate' On='%s.lnk' ValueKind='REG_SZ'/>
+      <Rule RegPath='HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\NamingTemplates' ValueName='ShortcutNameTemplate' On='%s.lnk' ValueKind='REG_SZ'/>
       <Rule RegPath='HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer' ValueName='Link' On='00 00 00 00' ValueKind='REG_BINARY'/>
     </Item>
     <Item>
